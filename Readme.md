@@ -1,8 +1,9 @@
-https://gitlab.com/VictorLamoine/kicad
-https://github.com/espressif/kicad-libraries
 
 
 # Parts
+
+* ESP32 DEVKIT V1
+    - https://www.aliexpress.us/item/2255800094862861.html
 
 * Micro USB Connector Breakout 
 
@@ -35,7 +36,15 @@ https://github.com/espressif/kicad-libraries
 
 # Micro USB Breakout
 
-![](./touchdro-board/touchdro-board/MicroUSB-Breakout/micro-usb-breakout.png)
+![./touchdro-board/touchdro-board/MicroUSB-Breakout/micro-usb-breakout.png](./touchdro-board/MicroUSB-Breakout/micro-usb-breakout.png)
 
-![]([./touchdro-board/touchdro-board/MicroUSB-Breakout/micro-usb-breakout.png](https://github.com/petmakris/touchdro/blob/main/touchdro-board/MicroUSB-Breakout/micro-usb-breakout.png))
+# ESP32 DevKit V1
+
+![./touchdro-board/ESP32-Devkit-V1/esp32.png](./touchdro-board/ESP32-Devkit-V1/esp32.png)
+
+
+# References
+
+- https://www.touchdro.com/resources/adapters/diy/esp32-diy-dro.html
+- https://gitlab.com/VictorLamoine/kicad
 
