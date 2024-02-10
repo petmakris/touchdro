@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<!-- saved from url=(0066)https://www.touchdro.com/resources/adapters/diy/esp32-diy-dro.html -->
+<html lang="en" class="fa-events-icons-ready"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <title>ESP32-Based DIY Digital Readout</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="./ESP32-Based DIY Digital Readout_files/main.css">
+
+
+        <!-- Google tag (gtag.js) -->
+        <script async="" src="./ESP32-Based DIY Digital Readout_files/analytics.js.download"></script><script async="" src="./ESP32-Based DIY Digital Readout_files/js"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-71BDQTCZQE');
+        </script>
+    <link href="./ESP32-Based DIY Digital Readout_files/b99b69fc3c.css" media="all" rel="stylesheet"><style type="text/css" id="ctre_styles">
+			#ctre_wnd {
+				position: fixed; bottom: 0; right: 10px;
+				background: #fff; box-shadow: 0px 0px 40px rgba(0,0,0,0.15);
+				border-radius: 3px 3px 0 0;
+				z-index: 2147483647;
+			}
+
+			@media (prefers-color-scheme: dark) {
+				#ctre_wnd { background: #000; box-shadow: 0px 0px 40px rgba(255,255,255,0.15); }
+			}
+			</style></head>
+    <body>
+            <header class="site-header">
+                <div class="main-row">
+                    <a href="https://www.touchdro.com/" class="logo" title="TouchDRO - DIY DRO">
+                        <img src="./ESP32-Based DIY Digital Readout_files/touchdro-logo.png" alt="TouchDRO - DIY Digital Readout System" class="logo">
+                    </a>
+                    <nav>
+                        <ul class="main-menu">
+                <li><a href="https://www.touchdro.com/" title="TouchDRO - DIY Digital Readout System">Home</a></li>
+                <li><a href="https://store.touchdro.com/" title="Buy DIY Digital Readout Kit">Store</a></li>
+                <li><a href="https://www.touchdro.com/downloads.html" title="Download DIY DRO Firmware">Downloads</a></li>
+                <li><a href="https://www.touchdro.com/resources/">Documentation</a>
+                    <ul class="res-submenu">
+                        <li>
+                            <span>Gegenral</span>
+                            <ul>
+                                <li><a href="https://www.touchdro.com/resources/info/dro-buying-tips.html">DRO Buying Tips</a></li>
+                                <li><a href="https://www.touchdro.com/resources/info/intro-to-touchdro.html">Introduction to TouchDRO</a></li>
+                                <li><a href="https://www.touchdro.com/resources/info/is-touchdro-right-for-you.html">Is TouchDRO Right for You?</a> </li>
+                                <li><a href="https://www.touchdro.com/resources/info/diy-dro-build-overview.html">DIY DRO Build Overview</a></li>
+                                <li><a href="https://www.touchdro.com/resources/info/touchdro-misconceptions.html">Common Misconceptions</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>Scales and Encoders</span>
+                            <ul>
+                                <li><a href="https://www.touchdro.com/resources/getting-started/supported-dro-scales.html">Supported Glass and Magnetic DRO Scales</a></li>
+                                <li><a href="https://www.touchdro.com/resources/getting-started/recommended-dro-scales.html">Recommended DRO Scales</a></li>
+                                <li><a href="https://www.touchdro.com/resources/scales/glass/glass-scale-pinout.html">Finding Glass Scale Pinout</a></li>
+                        
+                                <li><a href="https://www.touchdro.com/resources/getting-started/dro-scale-selection-guide.html">DRO Scale Selection Guide</a></li>
+                                <li><a href="https://www.touchdro.com/resources/scales/dro-scale-parameters.html">Understnding Scale Parameters</a></li>
+                        
+                        
+                                <li><a href="https://www.touchdro.com/resources/scales/glass/overview.html">Glass DRO Scales</a></li>
+                                <li><a href="https://www.touchdro.com/resources/scales/magnetic/overview.html">Magnetic DRO Scales</a></li>
+                                <li><a href="https://www.touchdro.com/resources/scales/capacitive/">Capacitive Scale Overview</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>Scale Adapters</span>
+                            <ul>
+                                <li><a href="https://www.touchdro.com/resources/adapters/32-bit/feature-comparison.html">Adapter Feature Comparison</a></li>
+                                <li><a href="https://www.touchdro.com/resources/adapters/32-bit/tda-4xx-dro-adapter-manual.html">TDA-400/420 Adapter Manual</a></li>
+                                <li><a href="https://www.touchdro.com/resources/adapters/32-bit/tdk-4x-dro-adapter-kit-manual.html">TDK-40/T Adapter Kit Manual</a></li>
+                        
+                                <li><a href="https://www.touchdro.com/resources/adapters/diy-dro-overview.html">DIY DRO Hardware Overview</a></li>
+                                <li><a href="https://www.touchdro.com/resources/adapters/diy/" title="Build instruction for scratch-building a DIY DRO adapter">Building DIY DRO Adapter</a></li>
+                                <li><a href="https://www.touchdro.com/resources/adapters/diy/build-diy-dro-kit.html">DRO Adapter Kit Instructions</a></li>
+                                <li><a href="https://www.touchdro.com/resources/adapters/diy/diy-dro-build-tips.html" title="Tips for building a reliable DIY DRO scale adapter circuit">DIY DRO Build Tips</a></li>
+                                <li><a href="https://www.touchdro.com/resources/getting-started/glass-scale-adapter.html" title="Final assembly instruction for the Glass/Magnetic Scale Adapter">Glass/Magnetic Adapter Quick Start</a></li>
+                                <li><a href="https://www.touchdro.com/resources/troubleshooting/avoiding-common-prolems.html">Avoiding Common Problems</a></li>
+                                <li><a href="https://www.touchdro.com/resources/troubleshooting/troubleshoting.html">Troubleshooting</a></li>
+                                <li><a href="https://www.touchdro.com/resources/adapters/32-bit/using-quadrature-encoders.html">Using Quadrature Encoders with Capacitive Scale Adapters</a></li>
+                        
+                            </ul>
+                        </li>
+                        <li>
+                            <span>TouchDRO Application</span>
+                            <ul>
+                               
+                                <li><a href="https://www.touchdro.com/resources/dro-manual/features.html">TouchDRO Features</a></li>
+                                <li><a href="https://www.touchdro.com/resources/dro-manual/system-requirements.html">System Requirements</a></li>
+                                <li><a href="https://www.touchdro.com/resources/getting-started/installation.html">Installation</a></li>
+                                <li><a href="https://www.touchdro.com/resources/getting-started/initial-configuration.html">Initial Configuration</a></li>
+                                <li><a href="https://www.touchdro.com/resources/dro-manual/calibration.html">Scale Calibration</a></li>
+                                <li><a href="https://www.touchdro.com/resources/getting-started/quick-start-guide.html">Quick Start Guide</a></li>
+                                <li><a href="https://www.touchdro.com/resources/dro-manual/index.html">User Manual</a></li>
+                                <li><a href="https://www.touchdro.com/app-privacy-policy.html">Privacy Plicy</a></li>
+                                 <li><a href="https://www.touchdro.com/resources/info/touchdro-v3.html">TouchDRO V3 Release</a></li>
+                            </ul>
+                        </li>        </ul>
+                </li>
+            </ul>
+                    </nav>
+                </div>
+            </header>            <main>
+                
+                
+                    <ul class="breadcrumb" vocab="https://schema.org/" typeof="BreadcrumbList">
+                        <li property="itemListElement" typeof="ListItem">
+                            <a href="https://www.touchdro.com/" property="item" typeof="WebPage"><span property="name">Home</span></a>
+                            <meta property="position" content="1">
+                        </li>
+                        <li property="itemListElement" typeof="ListItem">
+                            <a href="https://www.touchdro.com/resources/" property="item" typeof="WebPage"><span property="name">Resources</span></a>
+                            <meta property="position" content="2">
+                        </li>
+                        <li property="itemListElement" typeof="ListItem">
+                            <a href="https://www.touchdro.com/resources/adapters/diy/" property="item" typeof="WebPage"><span property="name">DIY Adapters</span></a>
+                            <meta property="position" content="3">
+                        </li>
+                        <li property="itemListElement" typeof="ListItem">
+                        <span property="name">ESP32 DIY DRO</span>
+                        <meta property="position" content="4">
+                        </li>
+                    </ul>
+                
+                
+                <article>
+                    <h1>ESP32-Based DIY Digital Readout</h1>
+                    
+
+<p>This DRO adapter is based on the new 32-bit ESP32 module and uses the second generation universal TouchDRO firmware
+    that can decode data from quadrature encoders, iGaging 21-bit scales, iGaging absolute scales, and Shahe BIN6
+    scales. In fact, the firmware is functionally identical to the version that ships on the pre-assembled iGaging and
+    Shahe scale adapters.
+</p>
+
+<a class="gallery" href="https://www.touchdro.com/assets/images/w1600/resources/adapters/diy/diy-dro-adapter-parts.jpg"><img src="./ESP32-Based DIY Digital Readout_files/diy-dro-adapter-parts.jpg" alt="DIY DRO example components" class="full-width"></a>
+<p>The circuit is identical to the one used by the <a href="https://www.touchdro.com/store/diy-dro-kit-v2.html">TouchDRO DIY Kit</a> and is
+    optimized for 5V and 3.3V scales. This includes glass/magnetic DRO scales, iGaging EZ-View DRO, iGaging DigiMag DRO,
+    iGaging Absolute DRO linear scales, and Shahe Liner Remote DRO scales. This design has been chosen due to its good
+    balance between being DIY-friendly and providing good noise and glitch resistance.
+</p>
+
+<p><em>Bundling this circuit on a prototyping board is rather challenging due to the number of required point-to-point
+        connections. Consequently, we are making the assumption that anyone undertaking this build already has a solid
+        understanding of electronics and good soldering skills. As such, there will be no detailed assembly
+        instructions, since it's assumed that you can read and follow the provided circuit schematic.
+    </em></p>
+
+<h2 id="circuitOverview">Circuit Overview</h2>
+
+
+<p>At the core of this adapter is the <a href="https://amzn.to/3rZ8Xx7" rel="no-follow">ESP32 DevKit V1 </a> development
+    board. It is a self-contained circuit that includes the ESP32 WROOM module, USB-to-Serial interface, voltage
+    regulator, and status LEDs. ESP32 WROOM has two powerful processors, hardware quadrature decoders, hardware
+    tachometer, and built-in BlueTooth transceiver. Moreover, it's very inexpensive and readily available in most parts
+    of the world. As a result, it makes a great platform for a DIY DRO. It has one notable downside - it's not designed
+    to be directly interfaced with the outside world, so its input pins don't have built-in Schmitt triggers, etc.. As a
+    result, we can't connect the scales directly and, instead, need to build a suitable input conditioning circuit.
+</p>
+<figure data-src="/assets/images/w800/adapters/diy/esp32-pinout.png"><a class="gallery" href="https://www.touchdro.com/assets/images/w1600/adapters/diy/esp32-pinout.png"><img src="./ESP32-Based DIY Digital Readout_files/esp32-pinout.png" alt="" title="ESP32 Devkit V1 Pinout"></a><figcaption>ESP32 Devkit V1 Pinout</figcaption></figure>
+<p>The circuit for this DIY adapter uses two 74HC14 hex inverting Schmitt triggers to provide a robust and noise
+    resistant input signal conditioning. In essence, each scale input line has a series 4.7KOhm resistor and a NOT
+    gate with a Schmitt trigger. The line is pulled up to the scales Vcc by a 47KOhm resistor.
+</p>
+
+<p>The series resistor is necessary to protect the IC from overvoltage. Since 74HC14 is powered from 3.3V supply (so
+    its output high signal is 3.3V), 5V scale input is outside of its recommended high input voltage. To protect the
+    IC from damage, we are adding the 4.7K resistor, which will limit the current to a level that can safely be
+    handled by the chip's internal diodes.
+</p>
+
+<p>Additionally, each scale input, as well as tachometer and problem inputs, have 0.1uF bypass capacitors. Those are
+    necessary to reduce noise on the scale's power supply line. Those capacitors should be installed as close to the
+    scale inputs as possible. Similarly, next to each of the 74HC14 there is a 0.1uF bypass capacitor.
+</p>
+
+<p>Finally, there are two 100uF electrolytic capacitors, one on 3.3V supply rail and one on 5V supply rail. If you
+    are planning to use only one of those rails to power the scales, the second capacitor can be omitted.
+</p>
+
+<h3 id="circuitSchematic">Circuit Schematic</h3>
+
+<figure data-src="/assets/images/w800/resources/adapters/diy/touchdro-kit-v2-schematic.png"><a class="gallery" href="https://www.touchdro.com/assets/images/w1600/resources/adapters/diy/touchdro-kit-v2-schematic.png"><img src="./ESP32-Based DIY Digital Readout_files/touchdro-kit-v2-schematic.png" alt="" title="Fig 2: Circuit Schematic"></a><figcaption>Fig 2: Circuit Schematic</figcaption></figure>
+<h3 id="billOfMaterials">Bill Of Materials</h3>
+    <p>This DIY DRO kit includes all of the components needed to assemble a TouchDRO adapter.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Value</th>
+                <th scope="col">Description</th>
+                <th scope="col">Qty.</th>
+                <th scope="col">Reference</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">ESP32 Devkit V1</th>
+                <td>ESP32 WROOM Dev. Kit </td>
+                <td>1</td>
+                <td>U1</td>
+            </tr>
+            <tr>
+                <th scope="row">74xx14</th>
+                <td>SN74HC14N Hex Schmitt Trigger</td>
+                <td>2</td>
+                <td>IC1, IC2</td>
+            </tr>
+            <tr>
+                <th scope="row">Capacitor, 100 uF</th>
+                <td>Cap. electrolytic, 100uF, 35V</td>
+                <td>2</td>
+                <td>C14, C15</td>
+            </tr>
+            <tr>
+                <th scope="row">Capacitor, 0.1uF</th>
+                <td>Cap. ceramic, 0.1uF 50V</td>
+                <td>8</td>
+                <td>C1, C3, C5, C7, C9, C10, C11, C12</td>
+            </tr>
+            <tr>
+                <th scope="row">Resistor, 4.7 KOhm</th>
+                <td>Metal film resistor, 4.7 KOhm, 1/4W, 5%</td>
+                <td>10</td>
+                <td>R1-10</td>
+            </tr>
+            <tr>
+                <th scope="row">Resistor 47KOhm</th>
+                <td>Metal film resistor, 47 KOhm, 1/4W, 5%</td>
+                <td>10</td>
+                <td>R21-R30</td>
+            </tr>
+        </tbody>
+    </table>
+
+<h2 id="scaleInputConfiguration">Scale Input Configuration</h2>
+
+<p>For each input you will need to connect the Vcc pin to the correct supply rail. If you follow the schematic, this
+    will also connect the pull-up resistors to the same rail (this is very important; otherwise, you can permanently
+    damage your scales). Additionally, iGaging 21-bit scales need to have the "CLOCK OUT" pin connected (jumpers are market R11-R14 on the schematic).
+</p>
+
+<p>Common configurations are as follows:
+</p>
+
+<ul>
+    <li>Glass and magnetic scales use 5V rail; "CLOCK OUT” line (R11-R14) not connected</li>
+    <li>iGaging EZ-View DRO and iGaging DigiMag use 3.3V rail ; "CLOCK OUT" line connected</li>
+    <li>iGaging Absolute DRO and Shahe Remote DRO scales use 3.3V rail; "CLOCK OUT" line not connected</li>
+</ul>
+
+<p><em>Note: Although 3.3V signal coming from capacitive scales is [generally] safe for ESP32, you can't connect
+        them directly. First of all, the firmware expects an inverted signal and will not work without a "NOT" gate.
+        Second, without the Schmitt trigger, the readout might be too glitchy. Finally, any noise spikes that exceed
+        3.6V can permanently damage ESP32's input pins. </em></p>
+
+<h2 id="droFirmware">DRO Firmware</h2>
+
+<p>The firmware needed to run this DIY DRO adapter can be found in the Downloads section (Universal Firmware - 32 Bit). 
+This ESP32 firmware is written in low-level C, not Arduino. To flash it into the ESP32 module you will need to install Espressif tool chain callend IDF. The process is more involved that upliading a sketch to an Arduino and requires installation of USB drivers and a few command line tools.The documentation is provide on the <a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/hw-reference/esp32/user-guide-devkits-r-v1.1.html" rel="no-follow">Espressif site</a>.</p>
+
+<p>To verify that the Espressif IDF is installed correctly, run the following command: <code>esptool.py version</code>
+Your result should look similar to this:
+</p>
+
+<figure data-src="/assets/images/w800/resources/adapters/diy/esp32-command-check.png"><a class="gallery" href="https://www.touchdro.com/assets/images/w1600/resources/adapters/diy/esp32-command-check.png"><img src="./ESP32-Based DIY Digital Readout_files/esp32-command-check.png" alt="" title="Example output from the above command"></a><figcaption>Example output from the above command</figcaption></figure>
+<p>Once you have a working environment, decompress the downloaded firmware into a folder and in the command line
+    execute the following:
+</p>
+
+<code>
+            <pre>            esptool.py \
+            -p /dev/ttyACM0 \
+            -b 460800 \
+            --before default_reset \
+            --after hard_reset \
+            --chip esp32  write_flash \
+            --flash_mode dio \
+            --flash_size detect \
+            --flash_freq 40m \
+            0x1000 bootloader.bin \
+            0x8000 partition-table.bin \
+            0x10000 touchdro-universal-32-v14.bin
+            </pre>
+        </code>
+
+<p>Depending on your OS, the parameters will likely vary. Specifically, the <em>-p</em> parameter that
+    specifies the port.
+</p>
+<ul>
+    <li>On a UNIX/Linux based OS you can run 'ls /dev/TTy*' to see all TTY devices before you connect ESP32
+        to the USB port, and then run the same command after and find the difference (which will be the port
+        for ESP32). In most cases it will be "TTy………."
+    </li>
+    <li>On Windows you can find the port used by ESP32 in the "Serial Ports" section of the device manager.
+    </li>
+</ul>
+
+<h2 id="buildTipsAndTesting">Build Tips and Testing</h2>
+
+
+<p>The build process for this adapter has two challenges:</p>
+<ul>
+    <li>Flashing the firmware on ESP32 is a complicated process</li>
+    <li>The input circuit requires a number of point-to-point connections</li>
+</ul>
+
+<p>To simplify the testing you might want to break it into those two stages and test each stage
+    individually.</p>
+
+<h3 id="esp32Firmware">ESP32 Firmware</h3>
+
+
+<p>ESP32 is a self contained module, and will run TouchDRO firmware just fine without the support circuitry.
+    As such, your first step should be flashing the firmware onto the module and making sure that it works
+    as expected:
+</p>
+<ol>
+    <li>Power up the module from USB and confirm that red LED is lit and blue LED is blinking</li>
+    <li>Pair the module with your Android tablet and make sure the pairing process succeeds. Device name in
+        the BT device list should be "TouchDRO DIY"</li>
+    <li>Open TouchDRO application and connect it to the module</li>
+    <li>Leave TouchDRO running for at least a minute. The application should not lose the connection</li>
+</ol>
+
+<p>Optionally, you can install a BlueTooth terminal application (such as BlueTerm) and do the following:</p>
+<ol>
+    <li>Disconnect TouchDRO application (if connected)</li>
+    <li>Connect to the DRO adapter via BlueTerm</li>
+    <li>You should see a data stream that contains <tt>x0;y0;z0;w0;t0;p0;</tt></li>
+    <li>Find the probe pin (see pinout above) and short it to the ground</li>
+    <li>The value for <em>p</em> in the data stream should change to <tt>p1;</tt> and the stream should
+        speed up</li>
+    <li>Disconnect the pin from the ground; <em>p</em> should return to <tt>p0;</tt></li>
+</ol>
+
+
+<p>If the tests pass, the firmware is running as expected.</p>
+
+<h3 id="inputCircuit">Input Circuit</h3>
+
+
+<p>Once you build the input circuit (before connecting anything to the ESP32 module), it's a good idea to
+    test each line to make sure the connections are working. For this, you can do the following:</p>
+<ol>
+    <li>Connect 5V, 3.3V and Ground to the ESP32 module (see pinout above). Alternatively, you can use a
+        bench power supply or even batteries.
+    </li>
+    <li>Using a Voltmeter, check voltage at each input pin. Since the pins are pulled up to Vcc, the voltage
+        should be very close to nominal Vcc (5V or 3.3V, depending on your configuration)
+    </li>
+    <li>Using a Voltmeter, check the voltage at each output (the line that will be connected to ESP32). The
+        voltage should be close to 0V, since 74HC14 is an inverting Schmitt trigger.
+    </li>
+    <li>Ground each input line and check the voltage at the output. It should be close to 3.3V
+    </li>
+</ol>
+
+<p>If all these tests pass, your circuit is working as expected and you can now connect it to the ESP32
+    module. Otherwise, re-check your connection, fix any problems and retest again.
+</p>
+
+<h2 id="scaleWiring">Scale Wiring</h2>
+
+
+<p>Glass and magnetic scales are generally very resilient to spurious line noise, etc. The 0.1uF capacitors
+    are not strictly necessary, but they provide a bit of protection against noise spikes on the supply
+    line. For capacitive scales, the bypass capacitors are very important, since these scales are very prone
+    to noise and glitches. Ideally, these capacitors should be installed inside the scale's reading head. If
+    you are not comfortable modifying the reading head, the capacitors should be installed on the USB
+    breakout boards [unless you are planning to hard-wire the scales to the main PCB].
+</p>
+                </article>
+            </main>
+            <footer>
+                <img src="./ESP32-Based DIY Digital Readout_files/touchdro-logo-black.png" alt="TouchDRO - DIY Digital Readout System" class="logo-footer">
+            
+                <ul class="links">
+                    <li><a href="https://www.touchdro.com/terms-and-conditions.html">Terms and Conditions</a> </li>
+                    <li><a href="https://www.touchdro.com/contact-us.html">Contact Us</a> </li>
+                    <li><a href="https://www.touchdro.com/app-privacy-policy.html">Privacy Policy</a> </li>
+                </ul>
+            
+                <ul class="social">
+                    <li><a href="https://www.facebook.com/touchdro" rel="nofollow" class="social-icon-facebook" title="TouchDRO Page on Facebook">Follow
+                            TouchDRO on Facebook</a></li>
+                    <li><a href="https://www.youtube.com/@touchdro" rel="nofollow" class="social-icon-youtube" title="TouchDRO YouTube Channel">Follow
+                            TouchDRO on YouTube</a></li>
+                </ul>
+            
+            
+                <span class="copyright">Copyright 2012-2023 Yuriy's Toys, LLC.</span>
+            </footer>            
+            <script type="text/javascript" src="./ESP32-Based DIY Digital Readout_files/jquery.min.js.download"></script>
+            <script type="text/javascript" src="./ESP32-Based DIY Digital Readout_files/store.js.download"></script>
+            <script src="./ESP32-Based DIY Digital Readout_files/jquery.magnific-popup.min.js.download"></script>
+            
+            <script type="text/javascript">
+            
+                // IIFE - Immediately Invoked Function Expression
+              (function($, window, document) {
+            
+                // The $ is now locally scoped 
+            
+               // Listen for the jQuery ready event on the document
+               $(function() {
+                 // The DOM is ready!
+                 initTabs($);
+                 initThumbnails($);
+                 initOptions($);
+            
+                 $('.gallery').magnificPopup({type:'image'});
+               });
+            
+               // The rest of the code goes here!
+              }(window.jQuery, window, document));
+            </script>
+             
+            <script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            
+              ga('create', 'UA-3097505-3', 'auto');
+              ga('send', 'pageview');
+            
+            </script>
+            
+            <script src="./ESP32-Based DIY Digital Readout_files/b99b69fc3c.js.download"></script>
+    
+</body></html>

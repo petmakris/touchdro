@@ -1,0 +1,52 @@
+function initTabs($) {
+
+    $(".tabs>section>h2>a").click(function() {
+        $(".tabs>section.active").removeClass("active");
+        $(this).closest( "section" ).addClass("active");
+    });
+
+
+    var process_hash = function() {
+        var hash = window.location.hash;
+
+        if (!["#description","#specifications","#documentation"].includes(hash)) hash = "#description"
+
+        element = $(".tabs " + hash + "-tab").closest( "section" )
+
+        if(element.length==0) {
+            element = $(".tabs #description-tab").closest( "section" )
+        } 
+
+        $(".tabs>section.active").removeClass("active");
+        element.addClass("active");
+    }
+
+    window.onpopstate = function(event)
+    {
+        process_hash();
+    };
+
+    process_hash();
+};
+
+function initThumbnails($) {
+    $('#main-product-image').magnificPopup({type:'image'});
+
+    $( 'ul.other-images a' ).click( function( e ) {
+        e.preventDefault();
+        //do some other stuff here
+
+        $("ul.other-images a").removeClass("selected");
+        $(this).addClass("active");
+
+        $("#main-product-image").attr("src", $(this).data("fullsize"));
+        $("#main-product-image").attr("data-mfp-src", $(this).attr("href"));
+    });
+}
+
+function initOptions($) {
+    $('#optionsForm input:radio').click(function(e) {
+        $('#hosted_button_id').val($(this).data('id'));
+        console.log($(this).data('id'))
+    })
+}
