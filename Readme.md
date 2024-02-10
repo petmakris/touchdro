@@ -35,6 +35,7 @@ https://github.com/espressif/kicad-libraries
 
 # Micro USB Breakout
 
-![](./touchdro-board/touchdro-board/MicroUSB-Breakout\micro-usb-breakout.png)
+![](./touchdro-board/touchdro-board/MicroUSB-Breakout/micro-usb-breakout.png)
 
+![]([./touchdro-board/touchdro-board/MicroUSB-Breakout/micro-usb-breakout.png](https://github.com/petmakris/touchdro/blob/main/touchdro-board/MicroUSB-Breakout/micro-usb-breakout.png))
 
