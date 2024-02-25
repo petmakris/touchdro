@@ -39,6 +39,18 @@
 ![./touchdro-board/ESP32-Devkit-V1/esp32.png](./touchdro-board/ESP32-Devkit-V1/esp32.png)
 
 
+# Firmware
+
+```bash
+esptool.py --chip esp32 --port COM5 --baud 460800 --before default_reset --after hard_reset write_flash --flash_mode dio --flash_size detect --flash_freq 40m 0x1000 bootloader.bin 0x8000 partition-table.bin 0x10000 touchdro-diy-universal-1.6.bin
+```
+
+
+
+It seems that for the esp32 to broadcast you need to keep the boot 
+button pressed
+
+
 # References
 
 - https://www.touchdro.com/resources/adapters/diy/esp32-diy-dro.html
