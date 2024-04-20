@@ -1,0 +1,8 @@
+{
+    "cSpell.enableFiletypes": [
+        "!cpp"
+    ],
+    "files.associations": {
+        "type_traits": "cpp"
+    }
+}
