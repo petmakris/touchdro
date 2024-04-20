@@ -1,31 +1,14 @@
 #include <Arduino.h>
 
-// I/O ports config (change pin numbers if DRO, Tach sensor or Tach LED feedback is connected to different ports)
-#define SCALE_CLK_PIN         2
 
-#define SCALE_X_PIN           3
-#define SCALE_Y_PIN           4
-#define SCALE_Z_PIN           5
-#define SCALE_W_PIN           6
-
-#define CLK_PIN_BIT           SCALE_CLK_PIN
+#define CLK_PIN_BIT           2
 #define SCALE_CLK_DDR         DDRD
 #define SCALE_CLK_OUTPUT_PORT PORTD
 
-#define X_PIN_BIT             SCALE_X_PIN
+#define X_PIN_BIT             3
 #define X_DDR                 DDRD
 #define X_INPUT_PORT          PIND
-#define X_OUTPUT_PORT         PORTD
 
-#define Y_PIN_BIT             SCALE_Y_PIN
-#define Y_DDR                 DDRD
-#define Y_INPUT_PORT          PIND
-#define Y_OUTPUT_PORT         PORTD
-
-#define Z_PIN_BIT             SCALE_Z_PIN
-#define Z_DDR                 DDRD
-#define Z_INPUT_PORT          PIND
-#define Z_OUTPUT_PORT         PORTD
 
 #define UART_BAUD_RATE        9600
 
@@ -54,10 +37,6 @@ volatile int  updateFrequencyCounter;
 
 volatile long xValue;
 volatile long xReportedValue;
-volatile long yValue;
-volatile long yReportedValue;
-volatile long zValue;
-volatile long zReportedValue;
 
 void setupClkTimer() {
     updateFrequencyCounter = 0;
@@ -117,16 +96,6 @@ ISR(TIMER2_COMPA_vect) {
             }
             xValue >>= 1;
 
-            if (Y_INPUT_PORT & (1 << Y_PIN_BIT)) {
-                yValue |= ((long) 0x00100000);
-            }
-            yValue >>= 1;
-
-            if (Z_INPUT_PORT & (1 << Z_PIN_BIT)) {
-                zValue |= ((long) 0x00100000);
-            }
-            zValue >>= 1;
-
         } else if (updateFrequencyCounter == SCALE_CLK_PULSES - 1) {
 
             // If 21-st bit is 'HIGH' inverse the sign of the axis readout
@@ -135,16 +104,6 @@ ISR(TIMER2_COMPA_vect) {
                 xValue |= ((long) 0xfff00000);
             xReportedValue = xValue;
             xValue         = 0L;
-
-            if (Y_INPUT_PORT & (1 << Y_PIN_BIT))
-                yValue |= ((long) 0xfff00000);
-            yReportedValue = yValue;
-            yValue         = 0L;
-
-            if (Z_INPUT_PORT & (1 << Z_PIN_BIT))
-                zValue |= ((long) 0xfff00000);
-            zReportedValue = zValue;
-            zValue         = 0L;
 
             // Tell the main loop, that it's time to sent data
             tickTimerFlag  = true;
@@ -174,16 +133,9 @@ void setup() {
     xValue         = 0L;
     xReportedValue = 0L;
 
-    Y_DDR &= ~(1 << Y_PIN_BIT);
-    yValue         = 0L;
-    yReportedValue = 0L;
-
-    Z_DDR &= ~(1 << Z_PIN_BIT);
-    zValue         = 0L;
-    zReportedValue = 0L;
+    setupClkTimer();
 
     Serial.begin(UART_BAUD_RATE);
-    setupClkTimer();
     sei();
 }
 
@@ -195,12 +147,6 @@ int main() {
 
             Serial.print(F("X"));
             Serial.print((long) xReportedValue);
-            Serial.print(F(";"));
-            Serial.print(F("Y"));
-            Serial.print((long) yReportedValue);
-            Serial.print(F(";"));
-            Serial.print(F("Z"));
-            Serial.print((long) zReportedValue);
             Serial.print(F(";"));
         }
     }
