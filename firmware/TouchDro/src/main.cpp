@@ -1,63 +1,51 @@
 #include <Arduino.h>
 
+#include "conf_probepins.h"
+#include "conf_scalepins.h"
+#include "conf_tachpins.h"
+
 // DRO config (if axis is not connected change in the corresponding constant value from "1" to "0")
-#define SCALE_X_ENABLED         0
-#define SCALE_Y_ENABLED         0
-#define SCALE_Z_ENABLED         0
-#define SCALE_W_ENABLED         0
+#define SCALE_X_ENABLED          0
+#define SCALE_Y_ENABLED          0
+#define SCALE_Z_ENABLED          0
+#define SCALE_W_ENABLED          0
 
 // DRO config (if axis is connected to Quadrature Encoder scales through LS7366R-type shield change in the corresponding constant value from "0" to "1")
-#define SCALE_X_TYPE            0
-#define SCALE_Y_TYPE            0
-#define SCALE_Z_TYPE            0
-#define SCALE_W_TYPE            0
+#define SCALE_X_TYPE             0
+#define SCALE_Y_TYPE             0
+#define SCALE_Z_TYPE             0
+#define SCALE_W_TYPE             0
 
-// I/O ports config (change pin numbers if DRO, Tach sensor or Tach LED feedback is connected to different ports)
-#define SCALE_CLK_PIN           2
-
-#define SCALE_X_PIN             3
-#define SCALE_Y_PIN             4
-#define SCALE_Z_PIN             5
-#define SCALE_W_PIN             6
-
-#define SCALE_X_AVERAGE_ENABLED 1
-#define SCALE_Y_AVERAGE_ENABLED 1
-#define SCALE_Z_AVERAGE_ENABLED 1
-#define SCALE_W_AVERAGE_ENABLED 1
+#define SCALE_X_AVERAGE_ENABLED  1
+#define SCALE_Y_AVERAGE_ENABLED  1
+#define SCALE_Z_AVERAGE_ENABLED  1
+#define SCALE_W_AVERAGE_ENABLED  1
 
 // Change it to 16 for machines with power feed
-#define AXIS_AVERAGE_COUNT      24
-
-// Tach config (if Tach is not connected change in the corresponding constant value from "1" to "0")
-#define TACH_ENABLED            0
-#define INPUT_TACH_PIN          7
+#define AXIS_AVERAGE_COUNT       24
 
 // Tach pre-scale value (number of tach sensor pulses per revolution)
-#define TACH_PRESCALE           1
+#define TACH_PRESCALE            1
 
 // Number of tach measurements to average
-#define TACH_AVERAGE_COUNT      6
+#define TACH_AVERAGE_COUNT       6
 
 // This is rounding for tachometer display (set to 0 to disable or 1 for 1% rounding)
-#define TACH_ROUND              2
+#define TACH_ROUND               2
 
 // Tach data format
-#define TACH_RAW_DATA_FORMAT    0  // single value format: T<rpm>;
+#define TACH_RAW_DATA_FORMAT     0  // single value format: T<rpm>;
 
 // Tach RPM config
-#define MIN_RPM_DELAY           1200  // 1.2 sec calculates to low range = 50 rpm.
+#define MIN_RPM_DELAY            1200  // 1.2 sec calculates to low range = 50 rpm.
 
 // Tach LED feadback config
-#define OUTPUT_TACH_LED_ENABLED 1
-#define OUTPUT_TACH_LED_PIN     9
-
-// Touch probe config (if Touch Probe is not connected change in the corresponding constant value from "1" to "0")
-#define PROBE_ENABLED           1
-#define INPUT_PROBE_PIN         8  // Pin 8 connected to Touch Probe
+#define OUTPUT_TACH_LED_ENABLED  1
+#define OUTPUT_TACH_LED_PIN      9
 
 // Touch probe invert signal config
-#define PROBE_INVERT \
-  0  // Touch Probe signal inversion: Open = Input pin is Low; Closed = Input pin is High
+// Touch Probe signal inversion: Open = Input pin is Low; Closed = Input pin is High
+#define PROBE_INVERT             0
 
 // Touch probe LED feadback config
 #define OUTPUT_PROBE_LED_ENABLED 1
@@ -65,259 +53,52 @@
 // When Quadrature Encoder scale are not used, on Arduino Uno you may change it to on-board LED pin 13.
 #define OUTPUT_PROBE_LED_PIN     10
 
-// General Settings
 //  Set this so it matches the BT module's BAUD rate
 #define UART_BAUD_RATE           9600
+
 //  Frequency in Hz (number of timer per second the scales are read and the data is sent to the application)
 #define UPDATE_FREQUENCY         24
 
 //  Max Frequency in Hz (number of timer per second) the tach output is sent to the application
 #define TACH_UPDATE_FREQUENCY    4
 
-//---END OF CONFIGURATION PARAMETERS ---
+// iGaging and Accuremote scales use 21 bit format
+#define SCALE_CLK_PULSES         21
 
-//---DO NOT CHANGE THE CODE BELOW UNLESS YOU KNOW WHAT YOU ARE DOING ---
+// iGaging scales run at about 9-10KHz
+#define SCALE_CLK_FREQUENCY      9000
 
-/* iGaging Clock Settings (do not change) */
-#define SCALE_CLK_PULSES         21  // iGaging and Accuremote scales use 21 bit format
-#define SCALE_CLK_FREQUENCY      9000  // iGaging scales run at about 9-10KHz
-#define SCALE_CLK_DUTY \
-  20  // iGaging scales clock run at 20% PWM duty (22us = ON out of 111us cycle)
+// iGaging scales clock run at 20% PWM duty (22us = ON out of 111us cycle)
+#define SCALE_CLK_DUTY           20
 
 /* weighted average constants */
-#define FILTER_SLOW_EMA AXIS_AVERAGE_COUNT  // Slow movement EMA
-#define FILTER_FAST_EMA 2                   // Fast movement EMA
+#define FILTER_SLOW_EMA          AXIS_AVERAGE_COUNT  // Slow movement EMA
+#define FILTER_FAST_EMA          2                   // Fast movement EMA
 
-#if (SCALE_X_ENABLED > 0) || (SCALE_Y_ENABLED > 0) || (SCALE_Z_ENABLED > 0) || \
-    (SCALE_W_ENABLED > 0)
+#if (SCALE_X_ENABLED > 0) || (SCALE_Y_ENABLED > 0) || (SCALE_Z_ENABLED > 0) || (SCALE_W_ENABLED > 0)
 #define DRO_ENABLED 1
 #else
 #define DRO_ENABLED 0
 #endif
 
-#if (SCALE_X_ENABLED > 0 && SCALE_X_TYPE == 0) || \
-    (SCALE_Y_ENABLED > 0 && SCALE_Y_TYPE == 0) || \
-    (SCALE_Z_ENABLED > 0 && SCALE_Z_TYPE == 0) || \
-    (SCALE_W_ENABLED > 0 && SCALE_W_TYPE == 0)
+#if (SCALE_X_ENABLED > 0 && SCALE_X_TYPE == 0) || (SCALE_Y_ENABLED > 0 && SCALE_Y_TYPE == 0) || \
+    (SCALE_Z_ENABLED > 0 && SCALE_Z_TYPE == 0) || (SCALE_W_ENABLED > 0 && SCALE_W_TYPE == 0)
 #define DRO_TYPE0_ENABLED 1
 #else
 #define DRO_TYPE0_ENABLED 0
 #endif
 
-#if (SCALE_X_ENABLED > 0 && SCALE_X_TYPE == 1) || \
-    (SCALE_Y_ENABLED > 0 && SCALE_Y_TYPE == 1) || \
-    (SCALE_Z_ENABLED > 0 && SCALE_Z_TYPE == 1) || \
-    (SCALE_W_ENABLED > 0 && SCALE_W_TYPE == 1)
+#if (SCALE_X_ENABLED > 0 && SCALE_X_TYPE == 1) || (SCALE_Y_ENABLED > 0 && SCALE_Y_TYPE == 1) || \
+    (SCALE_Z_ENABLED > 0 && SCALE_Z_TYPE == 1) || (SCALE_W_ENABLED > 0 && SCALE_W_TYPE == 1)
 #define DRO_TYPE1_ENABLED 1
 #else
 #define DRO_TYPE1_ENABLED 0
 #endif
 
-#if (SCALE_X_AVERAGE_ENABLED > 0) || (SCALE_Y_AVERAGE_ENABLED > 0) || \
-    (SCALE_Z_AVERAGE_ENABLED > 0) || (SCALE_W_AVERAGE_ENABLED > 0)
+#if (SCALE_X_AVERAGE_ENABLED > 0) || (SCALE_Y_AVERAGE_ENABLED > 0) || (SCALE_Z_AVERAGE_ENABLED > 0) || (SCALE_W_AVERAGE_ENABLED > 0)
 #define SCALE_AVERAGE_ENABLED 1
 #else
 #define SCALE_AVERAGE_ENABLED 0
-#endif
-
-// Define registers and pins for scale ports
-#if SCALE_CLK_PIN < 8
-#define CLK_PIN_BIT           SCALE_CLK_PIN
-#define SCALE_CLK_DDR         DDRD
-#define SCALE_CLK_OUTPUT_PORT PORTD
-#else
-#define CLK_PIN_BIT           (SCALE_CLK_PIN - 8)
-#define SCALE_CLK_DDR         DDRB
-#define SCALE_CLK_OUTPUT_PORT PORTB
-#endif
-
-#if SCALE_X_PIN < 8
-#define X_PIN_BIT     SCALE_X_PIN
-#define X_DDR         DDRD
-#define X_INPUT_PORT  PIND
-#define X_OUTPUT_PORT PORTD
-#else
-#define X_PIN_BIT     (SCALE_X_PIN - 8)
-#define X_DDR         DDRB
-#define X_INPUT_PORT  PINB
-#define X_OUTPUT_PORT PORTB
-#endif
-
-#if SCALE_Y_PIN < 8
-#define Y_PIN_BIT     SCALE_Y_PIN
-#define Y_DDR         DDRD
-#define Y_INPUT_PORT  PIND
-#define Y_OUTPUT_PORT PORTD
-#else
-#define Y_PIN_BIT     (SCALE_Y_PIN - 8)
-#define Y_DDR         DDRB
-#define Y_INPUT_PORT  PINB
-#define Y_OUTPUT_PORT PORTB
-#endif
-
-#if SCALE_Z_PIN < 8
-#define Z_PIN_BIT     SCALE_Z_PIN
-#define Z_DDR         DDRD
-#define Z_INPUT_PORT  PIND
-#define Z_OUTPUT_PORT PORTD
-#else
-#define Z_PIN_BIT     (SCALE_Z_PIN - 8)
-#define Z_DDR         DDRB
-#define Z_INPUT_PORT  PINB
-#define Z_OUTPUT_PORT PORTB
-#endif
-
-#if SCALE_W_PIN < 8
-#define W_PIN_BIT     SCALE_W_PIN
-#define W_DDR         DDRD
-#define W_INPUT_PORT  PIND
-#define W_OUTPUT_PORT PORTD
-#else
-#define W_PIN_BIT     (SCALE_W_PIN - 8)
-#define W_DDR         DDRB
-#define W_INPUT_PORT  PINB
-#define W_OUTPUT_PORT PORTB
-#endif
-
-// Define tach interrupt for selected pin
-#if INPUT_TACH_PIN == 2
-#define TACH_PIN_BIT            2
-#define TACH_DDR                DDRD
-#define TACH_INPUT_PORT         PIND
-#define TACH_INTERRUPT_VECTOR   PCINT2_vect
-#define TACH_INTERRUPT_REGISTER PCIE2
-#define TACH_INTERRUPT_MASK     PCMSK2
-#define TACH_INTERRUPT_PIN      PCINT18
-
-#elif INPUT_TACH_PIN == 3
-#define TACH_PIN_BIT            3
-#define TACH_DDR                DDRD
-#define TACH_INPUT_PORT         PIND
-#define TACH_INTERRUPT_VECTOR   PCINT2_vect
-#define TACH_INTERRUPT_REGISTER PCIE2
-#define TACH_INTERRUPT_MASK     PCMSK2
-#define TACH_INTERRUPT_PIN      PCINT19
-
-#elif INPUT_TACH_PIN == 4
-#define TACH_PIN_BIT            4
-#define TACH_DDR                DDRD
-#define TACH_INPUT_PORT         PIND
-#define TACH_INTERRUPT_VECTOR   PCINT2_vect
-#define TACH_INTERRUPT_REGISTER PCIE2
-#define TACH_INTERRUPT_MASK     PCMSK2
-#define TACH_INTERRUPT_PIN      PCINT20
-
-#elif INPUT_TACH_PIN == 5
-#define TACH_PIN_BIT            5
-#define TACH_DDR                DDRD
-#define TACH_INPUT_PORT         PIND
-#define TACH_INTERRUPT_VECTOR   PCINT2_vect
-#define TACH_INTERRUPT_REGISTER PCIE2
-#define TACH_INTERRUPT_MASK     PCMSK2
-#define TACH_INTERRUPT_PIN      PCINT21
-
-#elif INPUT_TACH_PIN == 6
-#define TACH_PIN_BIT            6
-#define TACH_DDR                DDRD
-#define TACH_INPUT_PORT         PIND
-#define TACH_INTERRUPT_VECTOR   PCINT2_vect
-#define TACH_INTERRUPT_REGISTER PCIE2
-#define TACH_INTERRUPT_MASK     PCMSK2
-#define TACH_INTERRUPT_PIN      PCINT22
-
-#elif INPUT_TACH_PIN == 7
-#define TACH_PIN_BIT            7
-#define TACH_DDR                DDRD
-#define TACH_INPUT_PORT         PIND
-#define TACH_INTERRUPT_VECTOR   PCINT2_vect
-#define TACH_INTERRUPT_REGISTER PCIE2
-#define TACH_INTERRUPT_MASK     PCMSK2
-#define TACH_INTERRUPT_PIN      PCINT23
-
-#elif INPUT_TACH_PIN == 8
-#define TACH_PIN_BIT            0
-#define TACH_DDR                DDRB
-#define TACH_INPUT_PORT         PINB
-#define TACH_INTERRUPT_VECTOR   PCINT0_vect
-#define TACH_INTERRUPT_REGISTER PCIE0
-#define TACH_INTERRUPT_MASK     PCMSK0
-#define TACH_INTERRUPT_PIN      PCINT0
-
-#elif INPUT_TACH_PIN == 9
-#define TACH_PIN_BIT            1
-#define TACH_DDR                DDRB
-#define TACH_INPUT_PORT         PINB
-#define TACH_INTERRUPT_VECTOR   PCINT0_vect
-#define TACH_INTERRUPT_REGISTER PCIE0
-#define TACH_INTERRUPT_MASK     PCMSK0
-#define TACH_INTERRUPT_PIN      PCINT1
-
-#elif INPUT_TACH_PIN == 10
-#define TACH_PIN_BIT            2
-#define TACH_DDR                DDRB
-#define TACH_INPUT_PORT         PINB
-#define TACH_INTERRUPT_VECTOR   PCINT0_vect
-#define TACH_INTERRUPT_REGISTER PCIE0
-#define TACH_INTERRUPT_MASK     PCMSK0
-#define TACH_INTERRUPT_PIN      PCINT2
-
-#elif INPUT_TACH_PIN == 11
-#define TACH_PIN_BIT            3
-#define TACH_DDR                DDRB
-#define TACH_INPUT_PORT         PINB
-#define TACH_INTERRUPT_VECTOR   PCINT0_vect
-#define TACH_INTERRUPT_REGISTER PCIE0
-#define TACH_INTERRUPT_MASK     PCMSK0
-#define TACH_INTERRUPT_PIN      PCINT3
-
-#elif INPUT_TACH_PIN == 12
-#define TACH_PIN_BIT            4
-#define TACH_DDR                DDRB
-#define TACH_INPUT_PORT         PINB
-#define TACH_INTERRUPT_VECTOR   PCINT0_vect
-#define TACH_INTERRUPT_REGISTER PCIE0
-#define TACH_INTERRUPT_MASK     PCMSK0
-#define TACH_INTERRUPT_PIN      PCINT4
-
-#elif INPUT_TACH_PIN == 13
-#define TACH_PIN_BIT            5
-#define TACH_DDR                DDRB
-#define TACH_INPUT_PORT         PINB
-#define TACH_INTERRUPT_VECTOR   PCINT0_vect
-#define TACH_INTERRUPT_REGISTER PCIE0
-#define TACH_INTERRUPT_MASK     PCMSK0
-#define TACH_INTERRUPT_PIN      PCINT5
-#endif
-
-#if OUTPUT_TACH_LED_PIN < 8
-#define TACH_LED_PIN_BIT     OUTPUT_TACH_LED_PIN
-#define TACH_LED_DDR         DDRD
-#define TACH_LED_OUTPUT_PORT PORTD
-#else
-#define TACH_LED_PIN_BIT     (OUTPUT_TACH_LED_PIN - 8)
-#define TACH_LED_DDR         DDRB
-#define TACH_LED_OUTPUT_PORT PORTB
-#endif
-
-// Define registers and pins for touch probe
-#if INPUT_PROBE_PIN < 8
-#define PROBE_PIN_BIT    INPUT_PROBE_PIN
-#define PROBE_DDR        DDRD
-#define PROBE_INPUT_PORT PIND
-#else
-#define PROBE_PIN_BIT    (INPUT_PROBE_PIN - 8)
-#define PROBE_DDR        DDRB
-#define PROBE_INPUT_PORT PINB
-#endif
-
-#if OUTPUT_PROBE_LED_PIN < 8
-#define PROBE_LED_PIN_BIT     OUTPUT_PROBE_LED_PIN
-#define PROBE_LED_DDR         DDRD
-#define PROBE_LED_OUTPUT_PORT PORTD
-#else
-#define PROBE_LED_PIN_BIT     (OUTPUT_PROBE_LED_PIN - 8)
-#define PROBE_LED_DDR         DDRB
-#define PROBE_LED_OUTPUT_PORT PORTB
 #endif
 
 #if DRO_TYPE1_ENABLED
@@ -327,25 +108,19 @@
 unsigned long const minRpmTime = (((long)MIN_RPM_DELAY) * ((long)1000));
 long const          longMax    = __LONG_MAX__;
 long const          longMin    = (-__LONG_MAX__ - (long)1);
-long const slowSc = ((long)2000) / (((long)FILTER_SLOW_EMA) + ((long)1));
-long const fastSc = ((long)20) / (((long)FILTER_FAST_EMA) + ((long)1));
+long const          slowSc     = ((long)2000) / (((long)FILTER_SLOW_EMA) + ((long)1));
+long const          fastSc     = ((long)20) / (((long)FILTER_FAST_EMA) + ((long)1));
 
 #if TACH_UPDATE_FREQUENCY == UPDATE_FREQUENCY
 int const tachUpdateFrequencyCounterLimit = 1;
 #else
-int const tachUpdateFrequencyCounterLimit =
-    (((long)UPDATE_FREQUENCY) / ((long)TACH_UPDATE_FREQUENCY));
+int const tachUpdateFrequencyCounterLimit = (((long)UPDATE_FREQUENCY) / ((long)TACH_UPDATE_FREQUENCY));
 #endif
 
-int const updateFrequencyCounterLimit =
-    (int)(((unsigned long)SCALE_CLK_FREQUENCY) /
-          ((unsigned long)UPDATE_FREQUENCY));
-int const clockCounterLimit =
-    (int)(((unsigned long)(F_CPU / 8)) / (unsigned long)SCALE_CLK_FREQUENCY) -
-    10;
+int const updateFrequencyCounterLimit = (int)(((unsigned long)SCALE_CLK_FREQUENCY) / ((unsigned long)UPDATE_FREQUENCY));
+int const clockCounterLimit           = (int)(((unsigned long)(F_CPU / 8)) / (unsigned long)SCALE_CLK_FREQUENCY) - 10;
 int const scaleClockDutyLimit =
-    (int)(((unsigned long)(F_CPU / 800)) * ((unsigned long)SCALE_CLK_DUTY) /
-          (unsigned long)SCALE_CLK_FREQUENCY);
+    (int)(((unsigned long)(F_CPU / 800)) * ((unsigned long)SCALE_CLK_DUTY) / (unsigned long)SCALE_CLK_FREQUENCY);
 int const scaleClockFirstReadDelay = (int)((unsigned long)F_CPU / 4000000);
 
 // variables that will store tach info and status
@@ -565,32 +340,28 @@ inline void readEncoders() {
   X_OUTPUT_PORT &= ~_BV(X_PIN_BIT);
   readEncoderValue();
   X_OUTPUT_PORT |= _BV(X_PIN_BIT);
-  xReportedValue = ((long)encoderValue1 << 24) + ((long)encoderValue2 << 16) +
-                   ((long)encoderValue3 << 8) + (long)encoderValue4;
+  xReportedValue = ((long)encoderValue1 << 24) + ((long)encoderValue2 << 16) + ((long)encoderValue3 << 8) + (long)encoderValue4;
 #endif
 
 #if SCALE_Y_ENABLED > 0 && SCALE_Y_TYPE == 1
   Y_OUTPUT_PORT &= ~_BV(Y_PIN_BIT);
   readEncoderValue();
   Y_OUTPUT_PORT |= _BV(Y_PIN_BIT);
-  yReportedValue = ((long)encoderValue1 << 24) + ((long)encoderValue2 << 16) +
-                   ((long)encoderValue3 << 8) + (long)encoderValue4;
+  yReportedValue = ((long)encoderValue1 << 24) + ((long)encoderValue2 << 16) + ((long)encoderValue3 << 8) + (long)encoderValue4;
 #endif
 
 #if SCALE_Z_ENABLED > 0 && SCALE_Z_TYPE == 1
   Z_OUTPUT_PORT &= ~_BV(Z_PIN_BIT);
   readEncoderValue();
   Z_OUTPUT_PORT |= _BV(Z_PIN_BIT);
-  zReportedValue = ((long)encoderValue1 << 24) + ((long)encoderValue2 << 16) +
-                   ((long)encoderValue3 << 8) + (long)encoderValue4;
+  zReportedValue = ((long)encoderValue1 << 24) + ((long)encoderValue2 << 16) + ((long)encoderValue3 << 8) + (long)encoderValue4;
 #endif
 
 #if SCALE_W_ENABLED > 0 && SCALE_W_TYPE == 1
   W_OUTPUT_PORT &= ~_BV(W_PIN_BIT);
   readEncoderValue();
   W_OUTPUT_PORT |= _BV(W_PIN_BIT);
-  wReportedValue = ((long)encoderValue1 << 24) + ((long)encoderValue2 << 16) +
-                   ((long)encoderValue3 << 8) + (long)encoderValue4;
+  wReportedValue = ((long)encoderValue1 << 24) + ((long)encoderValue2 << 16) + ((long)encoderValue3 << 8) + (long)encoderValue4;
 #endif
 }
 
@@ -606,21 +377,16 @@ inline void readEncoderValue() {
 
 #if DRO_ENABLED > 0
 #if SCALE_AVERAGE_ENABLED > 0
-inline void initializeAxisAverage(volatile long  axisLastRead[],
-                                  volatile int&  axisLastReadPosition,
-                                  volatile long& axisAMAValue) {
+inline void initializeAxisAverage(volatile long axisLastRead[], volatile int& axisLastReadPosition, volatile long& axisAMAValue) {
 
-  for (axisLastReadPosition = 0; axisLastReadPosition < (int)AXIS_AVERAGE_COUNT;
-       axisLastReadPosition++) {
+  for (axisLastReadPosition = 0; axisLastReadPosition < (int)AXIS_AVERAGE_COUNT; axisLastReadPosition++) {
     axisLastRead[axisLastReadPosition] = 0;
   }
   axisLastReadPosition = 0;
   axisAMAValue         = 0;
 }
 
-inline void scaleValueRounded(volatile long& ReportedValue,
-                              volatile long  axisLastRead[],
-                              volatile int&  axisLastReadPosition,
+inline void scaleValueRounded(volatile long& ReportedValue, volatile long axisLastRead[], volatile int& axisLastReadPosition,
                               volatile long& axisAMAValue) {
 
   int last_pos;
@@ -651,9 +417,7 @@ inline void scaleValueRounded(volatile long& ReportedValue,
 
   // Calculate the volatility in the counts by taking the sum of the differences
   prev_pos  = first_pos;
-  for (filter_pos = (first_pos + 1) % AXIS_AVERAGE_COUNT;
-       filter_pos != first_pos;
-       filter_pos = (filter_pos + 1) % AXIS_AVERAGE_COUNT) {
+  for (filter_pos = (first_pos + 1) % AXIS_AVERAGE_COUNT; filter_pos != first_pos; filter_pos = (filter_pos + 1) % AXIS_AVERAGE_COUNT) {
     minValue = MIN(minValue, axisLastRead[filter_pos]);
     maxValue = MAX(maxValue, axisLastRead[filter_pos]);
     volatility += ABS(axisLastRead[filter_pos] - axisLastRead[prev_pos]);
@@ -671,8 +435,7 @@ inline void scaleValueRounded(volatile long& ReportedValue,
   maxValue   = maxValue * ((long)100);
   minValue   = minValue * ((long)100);
   valueRange = maxValue - minValue;
-  if (axisAMAValue > maxValue + valueRange + ((long)100) ||
-      axisAMAValue < minValue - valueRange - ((long)100)) {
+  if (axisAMAValue > maxValue + valueRange + ((long)100) || axisAMAValue < minValue - valueRange - ((long)100)) {
     axisAMAValue = axisLastRead[last_pos] * ((long)100);
     return;
   }
@@ -802,8 +565,7 @@ inline bool sendTachOutputData() {
   tachReadSum                        = 0;
   if (tachReadoutRpm != 0 && tachLastReadRpm != 0) {
     // Calculate average read
-    for (readCounter = 0; readCounter < (int)TACH_AVERAGE_COUNT;
-         readCounter++) {
+    for (readCounter = 0; readCounter < (int)TACH_AVERAGE_COUNT; readCounter++) {
       if (tachLastRead[readCounter] != 0) {
         tachReadSum = tachReadSum + tachLastRead[readCounter];
         readCounted++;
@@ -850,8 +612,7 @@ inline bool sendTachOutputData() {
 #endif
 
   // Round result
-  tachReadoutRpm =
-      ((unsigned long)((tachReadoutRpm * 10) / tachReadRoundFactor) + 5);
+  tachReadoutRpm = ((unsigned long)((tachReadoutRpm * 10) / tachReadRoundFactor) + 5);
   tachReadoutRpm = ((unsigned long)tachReadoutRpm / 10);
   tachReadoutRpm = ((unsigned long)tachReadoutRpm * tachReadRoundFactor);
 #endif
@@ -1043,8 +804,7 @@ void setup() {
   tachReadoutMicrosec        = 0;
 
 #if TACH_AVERAGE_COUNT > 1
-  for (tachLastReadPosition = 0; tachLastReadPosition < (int)TACH_AVERAGE_COUNT;
-       tachLastReadPosition++) {
+  for (tachLastReadPosition = 0; tachLastReadPosition < (int)TACH_AVERAGE_COUNT; tachLastReadPosition++) {
     tachLastRead[tachLastReadPosition] = 0;
   }
   tachLastReadPosition = TACH_AVERAGE_COUNT - 1;
@@ -1089,8 +849,7 @@ int main() {
       // print DRO positions to the serial port
 #if SCALE_X_ENABLED > 0
 #if SCALE_X_AVERAGE_ENABLED > 0
-      scaleValueRounded(xReportedValue, axisLastReadX, axisLastReadPositionX,
-                        axisAMAValueX);
+      scaleValueRounded(xReportedValue, axisLastReadX, axisLastReadPositionX, axisAMAValueX);
 #endif
       Serial.print(F("X"));
       Serial.print((long)xReportedValue);
@@ -1099,8 +858,7 @@ int main() {
 
 #if SCALE_Y_ENABLED > 0
 #if SCALE_Y_AVERAGE_ENABLED > 0
-      scaleValueRounded(yReportedValue, axisLastReadY, axisLastReadPositionY,
-                        axisAMAValueY);
+      scaleValueRounded(yReportedValue, axisLastReadY, axisLastReadPositionY, axisAMAValueY);
 #endif
       Serial.print(F("Y"));
       Serial.print((long)yReportedValue);
@@ -1109,8 +867,7 @@ int main() {
 
 #if SCALE_Z_ENABLED > 0
 #if SCALE_Z_AVERAGE_ENABLED > 0
-      scaleValueRounded(zReportedValue, axisLastReadZ, axisLastReadPositionZ,
-                        axisAMAValueZ);
+      scaleValueRounded(zReportedValue, axisLastReadZ, axisLastReadPositionZ, axisAMAValueZ);
 #endif
       Serial.print(F("Z"));
       Serial.print((long)zReportedValue);
@@ -1119,8 +876,7 @@ int main() {
 
 #if SCALE_W_ENABLED > 0
 #if SCALE_W_AVERAGE_ENABLED > 0
-      scaleValueRounded(wReportedValue, axisLastReadW, axisLastReadPositionW,
-                        axisAMAValueW);
+      scaleValueRounded(wReportedValue, axisLastReadW, axisLastReadPositionW, axisAMAValueW);
 #endif
       Serial.print(F("W"));
       Serial.print((long)wReportedValue);
