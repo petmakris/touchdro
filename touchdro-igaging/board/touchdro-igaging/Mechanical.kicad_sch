@@ -255,7 +255,7 @@
 			)
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019/c6595b9b-e8bb-49e4-afec-acfd20afe60c"
 					(reference "G2")
 					(unit 1)
@@ -327,7 +327,7 @@
 			)
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019/c6595b9b-e8bb-49e4-afec-acfd20afe60c"
 					(reference "G1")
 					(unit 1)
@@ -397,7 +397,7 @@
 			)
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019/c6595b9b-e8bb-49e4-afec-acfd20afe60c"
 					(reference "H10")
 					(unit 1)
@@ -467,7 +467,7 @@
 			)
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019/c6595b9b-e8bb-49e4-afec-acfd20afe60c"
 					(reference "H9")
 					(unit 1)
@@ -537,7 +537,7 @@
 			)
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019/c6595b9b-e8bb-49e4-afec-acfd20afe60c"
 					(reference "H7")
 					(unit 1)
@@ -607,7 +607,7 @@
 			)
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019/c6595b9b-e8bb-49e4-afec-acfd20afe60c"
 					(reference "H8")
 					(unit 1)

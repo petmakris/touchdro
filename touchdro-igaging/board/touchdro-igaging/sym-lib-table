@@ -6,4 +6,5 @@
   (lib (name "Resistors")(type "KiCad")(uri "${KICAD_LIBS}/parts/lcsc/resistors/resistors.kicad_sym")(options "")(descr "LCSC Resistors"))
   (lib (name "Capacitors")(type "KiCad")(uri "${KICAD_LIBS}/parts/lcsc/capacitors/capacitors.kicad_sym")(options "")(descr "LCSC Capacitors"))
   (lib (name "2EDGK")(type "KiCad")(uri "${KICAD_LIBS}/parts/connectors/terminal/2EDGK/2EDGK.kicad_sym")(options "")(descr "2EDGK"))
+  (lib (name "Radio")(type "KiCad")(uri "${KICAD_LIBS}/parts/radio/Radio.kicad_sym")(options "")(descr "Radio"))
 )

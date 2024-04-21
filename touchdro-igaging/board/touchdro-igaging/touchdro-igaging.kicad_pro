@@ -508,7 +508,9 @@
       "Generic",
       "PinHeaders",
       "OT322516MJBA4SL",
-      "S3D16.000000A20F30T"
+      "S3D16.000000A20F30T",
+      "radio",
+      "Radio"
     ],
     "pinned_symbol_libs": [
       "74xx126",
@@ -552,7 +554,9 @@
       "Generic",
       "OT322516MJBA4SL",
       "C387370",
-      "S3D16.000000A20F30T"
+      "S3D16.000000A20F30T",
+      "radio",
+      "Radio"
     ]
   },
   "meta": {

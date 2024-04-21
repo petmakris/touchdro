@@ -1200,39 +1200,28 @@
 				)
 			)
 		)
-		(symbol "Connector_Generic:Conn_01x03"
-			(pin_names
-				(offset 1.016) hide)
+		(symbol "Radio:HC05"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "J"
-				(at 0 5.08 0)
+			(property "Reference" "U"
+				(at 0 10.16 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "Conn_01x03"
-				(at 0 -5.08 0)
+			(property "Value" "HC05"
+				(at -7.62 10.16 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
+			(property "Footprint" "Radio:HC05"
+				(at -7.62 10.16 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1240,8 +1229,8 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
-				(at 0 0 0)
+			(property "Datasheet" ""
+				(at -7.62 10.16 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1249,8 +1238,8 @@
 					(hide yes)
 				)
 			)
-			(property "ki_keywords" "connector"
-				(at 0 0 0)
+			(property "Description" "HC05"
+				(at -7.62 10.16 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1258,64 +1247,22 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "Connector*:*_1x??_*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "Conn_01x03_1_1"
+			(symbol "HC05_1_1"
 				(rectangle
-					(start -1.27 -2.413)
-					(end 0 -2.667)
+					(start -6.35 8.89)
+					(end 7.62 -8.89)
 					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 0.127)
-					(end 0 -0.127)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 2.667)
-					(end 0 2.413)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 3.81)
-					(end 1.27 -3.81)
-					(stroke
-						(width 0.254)
+						(width 0)
 						(type default)
 					)
 					(fill
 						(type background)
 					)
 				)
-				(pin passive line
-					(at -5.08 2.54 0)
-					(length 3.81)
-					(name "Pin_1"
+				(pin input line
+					(at -8.89 6.35 0)
+					(length 2.54)
+					(name "STATE"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1330,10 +1277,10 @@
 						)
 					)
 				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 3.81)
-					(name "Pin_2"
+				(pin input line
+					(at -8.89 3.81 0)
+					(length 2.54)
+					(name "RXD"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1348,10 +1295,10 @@
 						)
 					)
 				)
-				(pin passive line
-					(at -5.08 -2.54 0)
-					(length 3.81)
-					(name "Pin_3"
+				(pin input line
+					(at -8.89 1.27 0)
+					(length 2.54)
+					(name "TXD"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1359,6 +1306,60 @@
 						)
 					)
 					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -8.89 -1.27 0)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -8.89 -3.81 0)
+					(length 2.54)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -8.89 -6.35 0)
+					(length 2.54)
+					(name "EN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1764,8 +1765,16 @@
 		(uuid "d1b90b76-0b7d-4306-874f-2e8ab446f9ca")
 	)
 	(no_connect
+		(at 214.63 57.15)
+		(uuid "3d391a10-1da1-45da-b540-5c8c93ea4191")
+	)
+	(no_connect
 		(at 121.92 68.58)
 		(uuid "74120cbf-a5c2-4b54-a538-f4bb0b0b15b6")
+	)
+	(no_connect
+		(at 214.63 69.85)
+		(uuid "9d19897e-b732-4574-b462-5833b88aea8d")
 	)
 	(no_connect
 		(at 63.5 129.54)
@@ -1774,16 +1783,6 @@
 	(no_connect
 		(at 121.92 60.96)
 		(uuid "d29da95d-5c86-44dc-96c3-64c904b6b928")
-	)
-	(wire
-		(pts
-			(xy 121.92 104.14) (xy 152.4 104.14)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0c0c9d88-0fea-4dcc-b83f-18815f5589ad")
 	)
 	(wire
 		(pts
@@ -1804,16 +1803,6 @@
 			(type default)
 		)
 		(uuid "226b394c-ac3a-4f7d-84a3-182ee042388b")
-	)
-	(wire
-		(pts
-			(xy 121.92 106.68) (xy 152.4 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2a15e567-fb67-4cec-9266-219295feebfd")
 	)
 	(wire
 		(pts
@@ -1998,28 +1987,6 @@
 		(uuid "189013d6-4581-48bc-93f1-1ba706dac1a8")
 	)
 	(label "LED_{1}"
-		(at 140.97 106.68 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "26d6c0f6-803a-4fe7-abf6-15ef609f2e94")
-	)
-	(label "LED_{2}"
-		(at 140.97 104.14 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "2f783239-80d6-4187-8147-b8a47c9fb6ac")
-	)
-	(label "LED_{1}"
 		(at 201.93 143.51 180)
 		(fields_autoplaced yes)
 		(effects
@@ -2165,7 +2132,7 @@
 			(uuid "3401968c-74d9-4315-9fa7-f3ef1f1e33aa")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "#PWR051")
 					(unit 1)
@@ -2230,7 +2197,7 @@
 			(uuid "9c95f1da-f73b-4673-a0c2-0b43605681ce")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "#PWR08")
 					(unit 1)
@@ -2296,7 +2263,7 @@
 			(uuid "1c8190e7-933d-4182-9e79-36d1737ecc3a")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "#PWR05")
 					(unit 1)
@@ -2398,7 +2365,7 @@
 			(uuid "ecdea795-0199-4b74-b6eb-99638048298d")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "R3")
 					(unit 1)
@@ -2464,7 +2431,7 @@
 			(uuid "e3d2866e-755c-4c61-b780-33ea2d3e556b")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "#PWR052")
 					(unit 1)
@@ -2561,7 +2528,7 @@
 			(uuid "9a7c1a55-c33f-4907-b250-a934e0de6a41")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "C7")
 					(unit 1)
@@ -2658,154 +2625,9 @@
 			(uuid "cdef54c7-88db-4ae5-8170-278be916209f")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "C8")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector_Generic:Conn_01x03")
-		(at 157.48 104.14 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "43f35c65-2740-4f62-876c-06a6f0fa5abe")
-		(property "Reference" "J1"
-			(at 157.48 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "UART"
-			(at 160.02 104.14 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "PinHeaders:PinHeader_1x03_P2.54mm"
-			(at 157.48 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 157.48 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 157.48 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Type" "Virtual"
-			(at 157.48 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "fd0ff8a1-3648-42c7-b32b-05001723c45a")
-		)
-		(pin "2"
-			(uuid "54982324-7e68-4b51-885e-ae57a6ddcb76")
-		)
-		(pin "3"
-			(uuid "17585768-3a62-420c-ad39-666f7389d4c4")
-		)
-		(instances
-			(project "board"
-				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
-					(reference "J1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 152.4 101.6 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "61f85961-a24a-43f3-9a67-f2a6ee972a0e")
-		(property "Reference" "#PWR012"
-			(at 146.05 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 148.59 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 152.4 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 152.4 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 152.4 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7f8fe32e-2a39-4b21-8d38-d70e82288424")
-		)
-		(instances
-			(project "board"
-				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
-					(reference "#PWR012")
 					(unit 1)
 				)
 			)
@@ -2869,7 +2691,7 @@
 			(uuid "825a2643-d5b1-4550-abce-55dc8303720c")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "#PWR06")
 					(unit 1)
@@ -2966,7 +2788,7 @@
 			(uuid "2f8c83bc-456e-44e7-b5d0-e9d7b343223b")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "C6")
 					(unit 1)
@@ -3032,7 +2854,7 @@
 			(uuid "4425d49c-1592-45d4-b6a2-388756ab0f18")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "#PWR010")
 					(unit 1)
@@ -3129,7 +2951,7 @@
 			(uuid "cde470b3-8929-41c3-890c-297de92ce9a8")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "C5")
 					(unit 1)
@@ -3320,9 +3142,90 @@
 			(uuid "e3f76e9d-6790-4fba-87bc-239b7482b12c")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Radio:HC05")
+		(at 223.52 63.5 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c62ffba4-0cff-4e55-b9a1-3c021825994a")
+		(property "Reference" "U2"
+			(at 222.758 53.086 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 232.41 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Radio:HC05"
+			(at 215.9 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 215.9 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "HC05"
+			(at 215.9 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a49eb222-c2c1-42c3-aafa-36a34556e9b6")
+		)
+		(pin "2"
+			(uuid "aff93e39-98e3-41fa-8478-32bb2381f351")
+		)
+		(pin "4"
+			(uuid "14e58236-5d91-49df-bf9e-09009ef1328c")
+		)
+		(pin "5"
+			(uuid "0ab009a3-cef1-4e10-bde7-dd364c4ec064")
+		)
+		(pin "3"
+			(uuid "ac230b42-78e1-4d18-9aa3-b56cfc235339")
+		)
+		(pin "6"
+			(uuid "4f3424ac-cdef-4d5b-81b8-8aae2d80cba1")
+		)
+		(instances
+			(project "touchdro-igaging"
+				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
+					(reference "U2")
 					(unit 1)
 				)
 			)
@@ -3385,7 +3288,7 @@
 			(uuid "2439efb4-ab9b-4fbb-aba7-e4a7b7137021")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "#PWR021")
 					(unit 1)
@@ -3451,7 +3354,7 @@
 			(uuid "6092056b-8550-4bf6-a031-d03ccf689148")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(reference "#PWR011")
 					(unit 1)
@@ -3531,7 +3434,7 @@
 			(uuid "53f34d4c-8402-465e-9462-90378d07aa51")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(page "6")
 				)
@@ -3590,7 +3493,7 @@
 			(uuid "9495513a-4404-4f27-87e9-cb15fb12a836")
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(page "8")
 				)
@@ -3629,7 +3532,7 @@
 			)
 		)
 		(instances
-			(project "board"
+			(project "touchdro-igaging"
 				(path "/65134029-dbd2-409a-85a8-13c2a33ff019"
 					(page "9")
 				)
