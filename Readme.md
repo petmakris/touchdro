@@ -57,3 +57,76 @@ button pressed
 - https://gitlab.com/VictorLamoine/kicad
 
 https://www.touchdro.com/resources/adapters/diy/esp32-diy-dro.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Ordering from JLCPCB
+
+## Step 1
+
+from within `PCB`: 
+
+- Export Gerber files
+- Export Drill Files
+
+- Export Placement file
+  - Separate files for front/back
+  - Keep only top file
+  - Remove components not to be mounted
+
+## Step 2 
+
+from within `Schematic`:
+
+Create BOM compatible with JLCPCB the custom plugin from within our `kicad-libs` projecs:
+
+![KicadBOM](./docs/kicad-bom.png)
+
+This plugin will include only the components with a `JLCPCB` attributes
+
+# Production files
+
+kicad_pos_to_cpl.py POSITION.POSITION-JLCPCB.csv overrides.json [overrides.json]
+
+## Tune placement file
+
+Example `overrides.json`:
+
+```json
+{
+    "D3": 180,
+    "Q1": 180,
+
+    "U6": -90,
+    "U8": -90
+}
+```

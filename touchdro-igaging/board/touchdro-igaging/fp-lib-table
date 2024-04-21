@@ -1,0 +1,12 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "Graphics")(type "KiCad")(uri "${KICAD_LIBS}/parts/graphics")(options "")(descr "Graphics"))
+  (lib (name "Holes")(type "KiCad")(uri "${KICAD_LIBS}/parts/mounting/Holes")(options "")(descr "Holes"))
+  (lib (name "TestPoint")(type "KiCad")(uri "${KICAD_LIBS}/parts/test-points/TestPoint")(options "")(descr "TestPoint"))
+  (lib (name "Generic")(type "KiCad")(uri "${KICAD_LIBS}/parts/generic")(options "")(descr "Generic"))
+  (lib (name "Diodes")(type "KiCad")(uri "${KICAD_LIBS}/parts/lcsc/diodes")(options "")(descr "LCSC Diodes"))
+  (lib (name "Resistors")(type "KiCad")(uri "${KICAD_LIBS}/parts/lcsc/resistors")(options "")(descr "LCSC Resistors"))
+  (lib (name "Capacitors")(type "KiCad")(uri "${KICAD_LIBS}/parts/lcsc/capacitors")(options "")(descr "LCSC Capacitors"))
+  (lib (name "Commons")(type "KiCad")(uri "${KICAD_LIBS}/parts/lcsc/commons")(options "")(descr "LCSC Commons"))
+  (lib (name "2EDGK")(type "KiCad")(uri "${KICAD_LIBS}/parts/connectors/terminal/2EDGK")(options "")(descr "2EDGK"))
+)
