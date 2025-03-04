@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
-#define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
+#define cbi(sfr, bit)         (_SFR_BYTE(sfr) &= ~_BV(bit))
+#define sbi(sfr, bit)         (_SFR_BYTE(sfr) |= _BV(bit))
 
 #define CLK_PIN_BIT           2
 #define SCALE_CLK_DDR         DDRD
